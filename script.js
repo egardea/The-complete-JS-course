@@ -435,7 +435,7 @@ var john = {
     finalBill: [],
     calcTip: function(){
         for(var i = 0; i < this.bills.length; i++){
-            //Determine % on tipping rules
+            //Determine % based on tipping rules
             var percent;
             var bill = this.bills[i];
             if(bill<50){
@@ -445,11 +445,55 @@ var john = {
             } else {
                 percent = .10;
             }
+            //Add results to the correseping arrays
             this.tip[i] = bill * percent;
             this.finalBill[i] = bill + bill * percent;
         }
     }
 };
+
+var mark = {
+    fullName: 'Mark Roe',
+    bills: [77, 375, 110, 45],
+    tip: [],
+    finalBill: [],
+    calcTip: function(){
+        for(var i = 0; i < this.bills.length; i++){
+            //Determine % based on tipping rules
+            var percent;
+            var bill = this.bills[i];
+            if(bill<100){
+                percent = 0.2;
+            } else if (bill >= 100 && bill < 300){
+                percent = .10;
+            } else {
+                percent = .25;
+            }
+            //Add results to the correseping arrays
+            this.tip[i] = bill * percent;
+            this.finalBill[i] = bill + bill * percent;
+        }
+    }
+};
+
+//Calculate the average tips for each and check for the highest average
+function calcAverage(tip){
+    var sum = 0;
+    for (var i = 0; i < tip.length; i++){
+        sum = sum + tip[i];
+    }
+    return sum / tip.length;
+}
+//Do the calculations
+mark.calcTip();
 john.calcTip();
-console.log(john);
+console.log(mark, john);
+
+john.average = calcAverage(john.tip);//Add the array of average by way of DOT notation to the object and input the tip into the function!
+mark.average = calcAverage(mark.tip);
+if (john.average > mark.average){
+    console.log(john.fullName + ' paid the highest average tip of ' +john.average+ ' dollars!');
+} else {
+    console.log(mark.fullName + ' paid the highest average tip of ' +mark.average+ ' dollars!');
+}
 
